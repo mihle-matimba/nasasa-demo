@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NASASA Stokvel Management Dashboard</title>
+  <title>Nasasa Management Dashboard</title>
   <style>
     :root{
       --bg1:#ffffff;
@@ -37,9 +37,9 @@
     }
 
     .wrap{
-      max-width: 1180px;
+      max-width: 100%;
       margin: 0 auto;
-      padding: 22px 16px 60px;
+      padding: 22px 32px 60px;
     }
 
     .topbar{
@@ -57,9 +57,9 @@
       gap:12px;
       align-items:center;
       justify-content:space-between;
-      max-width: 1180px;
+      max-width: 100%;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 32px;
     }
 
     .brand{
@@ -141,18 +141,15 @@
       align-items:center;
       gap:10px;
       padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.65);
-      box-shadow: 0 8px 22px rgba(18,19,26,0.06);
+      border-radius: 10px;
+      border: 1px solid rgba(220,226,236,1);
+      background: #f5f7fb;
+      box-shadow: none;
       cursor:pointer;
       user-select:none;
       transition: transform .12s ease, box-shadow .12s ease;
     }
-    .iconBtn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 12px 26px rgba(18,19,26,0.08);
-    }
+    .iconBtn:hover{ transform: translateY(-1px); }
 
     .titleRow{
       display:flex;
@@ -173,10 +170,10 @@
     }
 
     .card{
-      border: 1px solid rgba(233,232,245,0.95);
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
+      border: 1px solid rgba(220,226,236,1);
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: none;
     }
 
     .section{
@@ -208,39 +205,39 @@
     }
 
     .btn{
-      border: 0;
+      border: 1px solid #1f64e6;
       cursor:pointer;
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 14px 14px;
-      font-weight: 650;
+      font-weight: 700;
       font-size: 14px;
       background: var(--btn);
       color: var(--btnText);
-      box-shadow: 0 14px 30px rgba(18,19,26,0.14);
+      box-shadow: none;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 10px;
       transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
     }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 36px rgba(18,19,26,0.16); }
+    .btn:hover{ transform: translateY(-1px); box-shadow: none; }
     .btn:active{ transform: translateY(0px); opacity: 0.92; }
 
     .btnSecondary{
-      background: rgba(255,255,255,0.7);
+      background: #f5f7fb;
       color: var(--text);
-      border: 1px solid var(--stroke);
-      box-shadow: 0 10px 22px rgba(18,19,26,0.07);
+      border: 1px solid rgba(220,226,236,1);
+      box-shadow: none;
       font-weight: 650;
     }
 
     .btnTiny{
       padding: 10px 12px;
-      border-radius: 14px;
+      border-radius: 10px;
       font-size: 13px;
       box-shadow: none;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(220,226,236,1);
+      background: #f5f7fb;
       color: var(--text);
     }
 
@@ -263,9 +260,9 @@
     }
     .chartCard{
       padding: 14px;
-      border-radius: 18px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.75);
+      border-radius: 16px;
+      border: 1px solid rgba(220,226,236,1);
+      background: #fff;
       display:flex;
       flex-direction:column;
       gap: 10px;
@@ -289,9 +286,9 @@
     .chartCanvas{
       width: 100%;
       height: 220px;
-      border-radius: 14px;
+      border-radius: 12px;
       background: #fff;
-      border: 1px solid var(--stroke);
+      border: 1px solid rgba(220,226,236,1);
     }
     .chartLegend{
       display:flex;
@@ -314,9 +311,9 @@
 
     .metric{
       padding: 14px;
-      border-radius: 18px;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.68);
+      border-radius: 16px;
+      border: 1px solid rgba(220,226,236,1);
+      background: #fff;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -330,14 +327,14 @@
       min-width: 0;
     }
     .dot{
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
       display:grid;
       place-items:center;
       color: #fff;
-      font-weight: 800;
-      box-shadow: 0 10px 20px rgba(18,19,26,0.10);
+      font-weight: 700;
+      box-shadow: none;
       flex: 0 0 auto;
     }
     .dot.purple{ background: linear-gradient(135deg, rgba(31,100,230,1), rgba(141,180,255,1)); }
@@ -752,25 +749,22 @@
           <img src="https://www.nasasa.co.za/wp-content/uploads/2023/11/logo.png" alt="NASASA logo" />
         </a>
         <div class="brandText">
-          <div class="brandName">NASASA Stokvel</div>
-          <div class="brandTag">Member management hub</div>
+          <div class="brandName">Nasasa</div>
+          <div class="brandTag">Corporate member management</div>
         </div>
       </div>
 
       <div class="search" role="search">
-        <span aria-hidden="true">🔎</span>
         <input id="searchInput" placeholder="Search groups or members" />
-        <span class="pill">⌘ F</span>
+        <span class="pill">Search</span>
       </div>
 
       <div class="rightActions">
         <div class="iconBtn" id="walletBtn" title="Wallet">
-          <span aria-hidden="true">💳</span>
           <span style="font-weight:800;font-size:13px;">Wallet</span>
         </div>
         <div class="iconBtn" id="auditBtn" title="Audit log">
-          <span aria-hidden="true">🧾</span>
-          <span style="font-weight:800;font-size:13px;">Audit</span>
+          <span style="font-weight:800;font-size:13px;">Audit log</span>
         </div>
       </div>
     </div>
@@ -779,8 +773,8 @@
   <div class="wrap">
     <div class="titleRow">
       <div>
-        <h1>NASASA Stokvel Dashboard</h1>
-        <p class="subtitle">Blue-branded workspace for groups, members, contributions, payouts, and monthly income.</p>
+        <h1>Nasasa Dashboard</h1>
+        <p class="subtitle">Corporate overview for groups, members, contributions, payouts, and monthly income.</p>
       </div>
       <div class="pill" id="nowPill"></div>
     </div>
@@ -793,16 +787,13 @@
 
       <div class="quickActions">
         <button class="btn" id="openAddMember">
-          <span>Add Member</span>
-          <span aria-hidden="true">➕</span>
+          <span>Add member</span>
         </button>
         <button class="btn" id="openContribution">
-          <span>Record Contribution</span>
-          <span aria-hidden="true">🧾</span>
+          <span>Record contribution</span>
         </button>
         <button class="btn" id="openPayout">
-          <span>Make Payout</span>
-          <span aria-hidden="true">💸</span>
+          <span>Make payout</span>
         </button>
       </div>
     </section>
@@ -926,7 +917,7 @@
 
       <div class="btnRow" style="margin-top:12px;">
         <button class="btnSecondary btn" id="editBankBtn" style="flex: 0 0 auto;">
-          <span>Edit bank details</span><span aria-hidden="true">✏️</span>
+          <span>Edit bank details</span>
         </button>
       </div>
     </section>
@@ -948,10 +939,10 @@
 
       <div class="modalFoot" id="modalFoot">
         <button class="btnSecondary btn" id="cancelModal" style="box-shadow:none;">
-          <span>Cancel</span><span aria-hidden="true">↩</span>
+          <span>Cancel</span>
         </button>
         <button class="btn" id="confirmModal">
-          <span>Confirm</span><span aria-hidden="true">✅</span>
+          <span>Confirm</span>
         </button>
       </div>
     </div>
@@ -1362,10 +1353,10 @@
       const net = totalNetBalance();
 
       const items = [
-        { label: "Total members", value: totalMembers.toLocaleString(), chip: "All groups", dot: "purple", icon: "👥" },
-        { label: "Monthly contributions", value: money(monthlyExpected), chip: "Expected", dot: "mint", icon: "📅" },
-        { label: "Payouts this month", value: money(payoutsThisMonth), chip: "This month", dot: "pink", icon: "💸" },
-        { label: "Net balance", value: money(net), chip: "Current", dot: "orange", icon: "🏦" }
+        { label: "Total members", value: totalMembers.toLocaleString(), chip: "All groups", dot: "purple", icon: "" },
+        { label: "Monthly contributions", value: money(monthlyExpected), chip: "Expected", dot: "mint", icon: "" },
+        { label: "Payouts this month", value: money(payoutsThisMonth), chip: "This month", dot: "pink", icon: "" },
+        { label: "Net balance", value: money(net), chip: "Current", dot: "orange", icon: "" }
       ];
 
       el.innerHTML = items.map(it => `
@@ -1408,7 +1399,7 @@
         const isSelected = g.id === state.selectedGroupId;
 
         return `
-          <div class="groupCard" style="${isSelected ? "outline: 2px solid rgba(122,92,255,0.35);" : ""}">
+          <div class="groupCard" style="${isSelected ? "outline: 2px solid rgba(31,100,230,0.3);" : ""}">
             <div class="groupTop">
               <div>
                 <p class="groupName">${escapeHtml(g.name)}</p>
