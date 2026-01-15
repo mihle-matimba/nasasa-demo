@@ -1,0 +1,2039 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stokvel Management Dashboard</title>
+  <style>
+    :root{
+      --bg1:#f7f6ff;
+      --bg2:#f9f2ff;
+      --card:#ffffffcc;
+      --stroke:#e9e8f5;
+      --text:#12131a;
+      --muted:#6b6f7b;
+      --shadow: 0 18px 55px rgba(18, 19, 26, 0.10);
+      --shadow2: 0 10px 30px rgba(18, 19, 26, 0.08);
+      --radius: 22px;
+      --radius2: 16px;
+
+      --purple:#7a5cff;
+      --purple2:#b9a8ff;
+      --mint:#25c7a6;
+      --pink:#ff6aa0;
+      --orange:#ffb020;
+
+      --btn:#12131a;
+      --btnText:#ffffff;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(122, 92, 255, 0.18), transparent 55%),
+        radial-gradient(900px 500px at 90% 25%, rgba(255, 106, 160, 0.14), transparent 55%),
+        radial-gradient(900px 700px at 75% 90%, rgba(37, 199, 166, 0.12), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+
+    .wrap{
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px 16px 60px;
+    }
+
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 10px 0 14px;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(247,246,255,0.95), rgba(247,246,255,0.55));
+      border-bottom: 1px solid rgba(233,232,245,0.9);
+    }
+
+    .topbarInner{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .search{
+      flex:1;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 14px;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.65);
+      box-shadow: 0 8px 22px rgba(18,19,26,0.06);
+      min-width: 180px;
+    }
+    .search input{
+      width: 100%;
+      border: 0;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .pill{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      color: var(--muted);
+      background: rgba(255,255,255,0.55);
+      white-space: nowrap;
+    }
+
+    .rightActions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .iconBtn{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.65);
+      box-shadow: 0 8px 22px rgba(18,19,26,0.06);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .iconBtn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(18,19,26,0.08);
+    }
+
+    .titleRow{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin: 22px 0 10px;
+    }
+    h1{
+      margin:0;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .card{
+      border: 1px solid rgba(233,232,245,0.95);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+    }
+
+    .section{
+      margin-top: 16px;
+      padding: 16px;
+    }
+
+    .sectionHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 12px;
+    }
+    .sectionHeader h2{
+      margin:0;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+    .hint{
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .quickActions{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .btn{
+      border: 0;
+      cursor:pointer;
+      border-radius: 16px;
+      padding: 14px 14px;
+      font-weight: 650;
+      font-size: 14px;
+      background: var(--btn);
+      color: var(--btnText);
+      box-shadow: 0 14px 30px rgba(18,19,26,0.14);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 36px rgba(18,19,26,0.16); }
+    .btn:active{ transform: translateY(0px); opacity: 0.92; }
+
+    .btnSecondary{
+      background: rgba(255,255,255,0.7);
+      color: var(--text);
+      border: 1px solid var(--stroke);
+      box-shadow: 0 10px 22px rgba(18,19,26,0.07);
+      font-weight: 650;
+    }
+
+    .btnTiny{
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      box-shadow: none;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.7);
+      color: var(--text);
+    }
+
+    .btnRow{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .metrics{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .metric{
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.68);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+    }
+
+    .metricLeft{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .dot{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 10px 20px rgba(18,19,26,0.10);
+      flex: 0 0 auto;
+    }
+    .dot.purple{ background: linear-gradient(135deg, rgba(122,92,255,1), rgba(185,168,255,1)); }
+    .dot.mint{ background: linear-gradient(135deg, rgba(37,199,166,1), rgba(165,255,233,1)); color:#063a33; }
+    .dot.pink{ background: linear-gradient(135deg, rgba(255,106,160,1), rgba(255,192,221,1)); color:#3b0f1f; }
+    .dot.orange{ background: linear-gradient(135deg, rgba(255,176,32,1), rgba(255,225,166,1)); color:#4b2b00; }
+
+    .metricLabel{
+      font-size: 12px;
+      color: var(--muted);
+      margin:0 0 3px;
+    }
+    .metricValue{
+      font-size: 18px;
+      font-weight: 800;
+      margin:0;
+      letter-spacing: -0.02em;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 210px;
+    }
+    .metricRight{
+      text-align:right;
+      flex: 0 0 auto;
+    }
+    .metricChip{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.65);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .groupsGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .groupCard{
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.68);
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .groupTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .groupName{
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin:0;
+      font-size: 15px;
+    }
+    .groupMeta{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .kvRow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .kv{
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.65);
+    }
+    .kv .k{
+      color: var(--muted);
+      font-size: 11px;
+      margin:0 0 2px;
+    }
+    .kv .v{
+      margin:0;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      font-size: 13px;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .calendar{
+      padding: 12px;
+    }
+    .calendarTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .monthTitle{
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin:0;
+      font-size: 15px;
+    }
+
+    .calGrid{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    .dow{
+      color: var(--muted);
+      font-size: 11px;
+      text-align:center;
+      padding: 6px 0;
+    }
+    .day{
+      min-height: 78px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.62);
+      padding: 8px;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+      position:relative;
+    }
+    .day:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(18,19,26,0.08);
+    }
+    .day.muted{
+      opacity: 0.45;
+    }
+    .dayNum{
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .badges{
+      display:flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .badge{
+      font-size: 10px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.7);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .badge.good{ color: #0b6b59; border-color: rgba(37,199,166,0.45); }
+    .badge.warn{ color: #8a4b00; border-color: rgba(255,176,32,0.45); }
+    .badge.bad{ color: #7a1f3d; border-color: rgba(255,106,160,0.45); }
+
+    .panel{
+      padding: 14px;
+    }
+    .panelTitle{
+      margin:0 0 8px;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing:-0.01em;
+    }
+    .empty{
+      border: 1px dashed rgba(233,232,245,1);
+      border-radius: 16px;
+      padding: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.55);
+      font-size: 13px;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.65);
+    }
+    th, td{
+      padding: 10px 10px;
+      text-align:left;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(233,232,245,0.85);
+      vertical-align: top;
+    }
+    th{
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(255,255,255,0.55);
+    }
+    tr:last-child td{ border-bottom: 0; }
+
+    .status{
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.7);
+      display:inline-block;
+      white-space: nowrap;
+    }
+    .status.ok{ color:#0b6b59; border-color: rgba(37,199,166,0.45); }
+    .status.due{ color:#8a4b00; border-color: rgba(255,176,32,0.45); }
+    .status.late{ color:#7a1f3d; border-color: rgba(255,106,160,0.45); }
+
+    .rowActions{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .bankGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .toastWrap{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      z-index: 50;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      width: min(560px, calc(100% - 24px));
+      pointer-events: none;
+    }
+    .toast{
+      pointer-events: none;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      animation: pop .18s ease;
+    }
+    .toast strong{ display:block; font-size: 13px; }
+    .toast span{ color: var(--muted); font-size: 12px; }
+    @keyframes pop{
+      from{ transform: translateY(8px); opacity: 0; }
+      to{ transform: translateY(0px); opacity: 1; }
+    }
+
+    .modalOverlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(18,19,26,0.35);
+      backdrop-filter: blur(10px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index: 60;
+      padding: 18px;
+    }
+    .modalOverlay.open{ display:flex; }
+
+    .modal{
+      width: min(560px, 100%);
+      border-radius: 22px;
+      border: 1px solid rgba(233,232,245,0.95);
+      background: rgba(255,255,255,0.75);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding: 14px 14px 10px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      border-bottom: 1px solid rgba(233,232,245,0.85);
+    }
+    .modalTitle{
+      margin:0;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing:-0.01em;
+    }
+    .modalSub{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .closeBtn{
+      cursor:pointer;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.7);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .modalBody{
+      padding: 14px;
+    }
+    .formGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    label{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 6px;
+      font-weight: 800;
+    }
+    input, select, textarea{
+      width:100%;
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: 12px 12px;
+      background: rgba(255,255,255,0.72);
+      outline:none;
+      font-size: 14px;
+      color: var(--text);
+    }
+    textarea{ min-height: 86px; resize: vertical; }
+    .modalFoot{
+      padding: 12px 14px 14px;
+      border-top: 1px solid rgba(233,232,245,0.85);
+      display:flex;
+      gap: 10px;
+      justify-content:flex-end;
+      flex-wrap: wrap;
+    }
+
+    .twoCols{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .note{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .selectHint{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .miniSelect{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      width: 100%;
+    }
+
+    .selectedPill{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.65);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 760px){
+      .quickActions{ grid-template-columns: repeat(3, 1fr); }
+      .metrics{ grid-template-columns: repeat(4, 1fr); }
+      .grid2{ grid-template-columns: 2fr 1fr; }
+      .split{ grid-template-columns: 1.5fr 1fr; }
+      .groupsGrid{ grid-template-columns: repeat(2, 1fr); }
+      .kvRow{ grid-template-columns: repeat(4, 1fr); }
+      .bankGrid{ grid-template-columns: repeat(2, 1fr); }
+      .twoCols{ grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbarInner">
+      <div class="search" role="search">
+        <span aria-hidden="true">🔎</span>
+        <input id="searchInput" placeholder="Search groups or members" />
+        <span class="pill">⌘ F</span>
+      </div>
+
+      <div class="rightActions">
+        <div class="iconBtn" id="walletBtn" title="Wallet">
+          <span aria-hidden="true">💳</span>
+          <span style="font-weight:800;font-size:13px;">Wallet</span>
+        </div>
+        <div class="iconBtn" id="auditBtn" title="Audit log">
+          <span aria-hidden="true">🧾</span>
+          <span style="font-weight:800;font-size:13px;">Audit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="titleRow">
+      <div>
+        <h1>Stokvel Dashboard</h1>
+        <p class="subtitle">One place for groups, members, contributions, payouts, and monthly income.</p>
+      </div>
+      <div class="pill" id="nowPill"></div>
+    </div>
+
+    <section class="card section" aria-label="Quick Actions">
+      <div class="sectionHeader">
+        <h2>Quick Actions</h2>
+        <div class="hint">Fast forms, minimal fields</div>
+      </div>
+
+      <div class="quickActions">
+        <button class="btn" id="openAddMember">
+          <span>Add Member</span>
+          <span aria-hidden="true">➕</span>
+        </button>
+        <button class="btn" id="openContribution">
+          <span>Record Contribution</span>
+          <span aria-hidden="true">🧾</span>
+        </button>
+        <button class="btn" id="openPayout">
+          <span>Make Payout</span>
+          <span aria-hidden="true">💸</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="card section" aria-label="Dashboard Summary">
+      <div class="sectionHeader">
+        <h2>Summary</h2>
+        <div class="hint" id="summaryHint">Across all groups</div>
+      </div>
+
+      <div class="metrics" id="metrics"></div>
+    </section>
+
+    <section class="grid2" aria-label="Groups and side panel">
+      <div class="card section">
+        <div class="sectionHeader">
+          <h2>Groups</h2>
+          <div class="btnRow">
+            <button class="btnTiny" id="createGroupBtn">Create Group</button>
+            <button class="btnTiny" id="resetDemoBtn">Reset Demo</button>
+          </div>
+        </div>
+
+        <div class="groupsGrid" id="groupsGrid"></div>
+
+        <div class="note" id="groupsNote"></div>
+      </div>
+
+      <div class="card section" aria-label="Selected Group">
+        <div class="sectionHeader">
+          <h2>Selected Group</h2>
+          <div class="hint" id="selectedGroupHint">Pick a group</div>
+        </div>
+
+        <div class="panel" id="selectedGroupPanel">
+          <div class="empty">Select a group to see members and actions here.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="split" aria-label="Calendar and daily breakdown">
+      <div class="card section calendar">
+        <div class="sectionHeader" style="margin-bottom: 8px;">
+          <h2>Monthly income calendar</h2>
+          <div class="hint">Expected, received, payouts</div>
+        </div>
+
+        <div class="calendarTop">
+          <button class="btnTiny" id="prevMonth">Prev</button>
+          <p class="monthTitle" id="monthTitle"></p>
+          <button class="btnTiny" id="nextMonth">Next</button>
+        </div>
+
+        <div class="calGrid" id="calDow"></div>
+        <div class="calGrid" id="calGrid"></div>
+      </div>
+
+      <div class="card section" aria-label="Date breakdown">
+        <div class="sectionHeader">
+          <h2>Date breakdown</h2>
+          <div class="hint" id="dateHint">Tap a date</div>
+        </div>
+
+        <div class="panel" id="datePanel">
+          <div class="empty">Click a date in the calendar to see a breakdown by group and member.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section" aria-label="Member Details">
+      <div class="sectionHeader">
+        <h2>Member details</h2>
+        <div class="hint" id="memberHint">Shows selected group members</div>
+      </div>
+
+      <div id="membersWrap">
+        <div class="empty">Select a group to view members.</div>
+      </div>
+    </section>
+
+    <section class="card section" aria-label="Bank Account Details">
+      <div class="sectionHeader">
+        <h2>Bank account details</h2>
+        <div class="hint">Admin level</div>
+      </div>
+
+      <div class="bankGrid" id="bankGrid"></div>
+
+      <div class="btnRow" style="margin-top:12px;">
+        <button class="btnSecondary btn" id="editBankBtn" style="flex: 0 0 auto;">
+          <span>Edit bank details</span><span aria-hidden="true">✏️</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="toastWrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="modalOverlay" id="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" aria-label="Modal">
+      <div class="modalHead">
+        <div>
+          <p class="modalTitle" id="modalTitle">Modal</p>
+          <p class="modalSub" id="modalSub">Subtitle</p>
+        </div>
+        <button class="closeBtn" id="closeModal">Close</button>
+      </div>
+
+      <div class="modalBody" id="modalBody"></div>
+
+      <div class="modalFoot" id="modalFoot">
+        <button class="btnSecondary btn" id="cancelModal" style="box-shadow:none;">
+          <span>Cancel</span><span aria-hidden="true">↩</span>
+        </button>
+        <button class="btn" id="confirmModal">
+          <span>Confirm</span><span aria-hidden="true">✅</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const money = (n) => {
+      const num = Number(n || 0);
+      return new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR" }).format(num);
+    };
+
+    const fmtDate = (d) => {
+      const dt = new Date(d);
+      const y = dt.getFullYear();
+      const m = String(dt.getMonth() + 1).padStart(2, "0");
+      const day = String(dt.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    };
+
+    const monthName = (d) => d.toLocaleString(undefined, { month: "long", year: "numeric" });
+
+    const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
+
+    const state = {
+      groups: [],
+      bank: {
+        bankName: "Capitec Bank",
+        accountHolder: "Stokvel Admin",
+        accountNumber: "1234567890",
+        branchCode: "470010"
+      },
+      audit: [],
+      selectedGroupId: null,
+      calMonth: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+      selectedDate: null,
+      lastModal: null
+    };
+
+    function seedDemo(){
+      const g1 = {
+        id: uid(),
+        name: "Siyakhula Groceries",
+        contributionAmount: 300,
+        frequency: "Monthly",
+        nextPayoutDate: nextMonthDate(25),
+        members: [
+          member("Thando Mokoena", "082 111 2233", "2025-09-03", 300, 0),
+          member("Zinhle Dlamini", "083 555 7788", "2025-09-10", 300, 150),
+          member("Sipho Nkosi", "071 343 9222", "2025-10-01", 300, 0),
+        ],
+        ledger: []
+      };
+
+      const g2 = {
+        id: uid(),
+        name: "Mkansi Savings Circle",
+        contributionAmount: 500,
+        frequency: "Monthly",
+        nextPayoutDate: nextMonthDate(15),
+        members: [
+          member("Nandi Khumalo", "079 222 3010", "2025-08-12", 500, 0),
+          member("Bongani Zulu", "076 900 1123", "2025-08-12", 500, 0),
+          member("Lerato Molefe", "073 800 4455", "2025-09-01", 500, 500),
+          member("Ayanda Maseko", "081 700 3300", "2025-09-15", 500, 0),
+        ],
+        ledger: []
+      };
+
+      const g3 = {
+        id: uid(),
+        name: "School Fees Pool",
+        contributionAmount: 250,
+        frequency: "Monthly",
+        nextPayoutDate: nextMonthDate(5),
+        members: [
+          member("Sizwe Radebe", "074 120 0099", "2025-07-21", 250, 0),
+          member("Nomsa Hadebe", "078 333 8811", "2025-07-21", 250, 0),
+        ],
+        ledger: []
+      };
+
+      state.groups = [g1, g2, g3];
+
+      state.audit = [
+        auditItem("System", "Demo loaded"),
+      ];
+
+      const today = new Date();
+      const y = today.getFullYear();
+      const m = today.getMonth();
+
+      addContribution(g1.id, g1.members[0].id, 300, new Date(y, m, 2));
+      addContribution(g2.id, null, 1500, new Date(y, m, 3), true);
+      addContribution(g1.id, g1.members[2].id, 300, new Date(y, m, 8));
+      addPayout(g2.id, "Pool payout", 500, new Date(y, m, 12));
+      addContribution(g3.id, null, 500, new Date(y, m, 15), true);
+      addPayout(g1.id, "Member payout", 300, new Date(y, m, 18));
+      addContribution(g2.id, g2.members[1].id, 500, new Date(y, m, 22));
+
+      state.selectedGroupId = state.groups[0].id;
+    }
+
+    function member(name, phone, joinDate, monthlyDue, outstanding){
+      return {
+        id: uid(),
+        name,
+        phone,
+        joinDate,
+        monthlyDue,
+        totalContributed: 0,
+        outstanding: Number(outstanding || 0)
+      };
+    }
+
+    function auditItem(actor, message){
+      return {
+        id: uid(),
+        at: new Date().toISOString(),
+        actor,
+        message
+      };
+    }
+
+    function nextMonthDate(day){
+      const now = new Date();
+      const dt = new Date(now.getFullYear(), now.getMonth() + 1, day);
+      return fmtDate(dt);
+    }
+
+    function groupById(id){ return state.groups.find(g => g.id === id); }
+    function memberById(group, mid){ return group.members.find(m => m.id === mid); }
+
+    function ensureSelected(){
+      if (!state.selectedGroupId && state.groups.length){
+        state.selectedGroupId = state.groups[0].id;
+      }
+    }
+
+    function groupBalance(group){
+      let bal = 0;
+      for (const tx of group.ledger){
+        if (tx.type === "contribution") bal += tx.amount;
+        if (tx.type === "payout") bal -= tx.amount;
+      }
+      return bal;
+    }
+
+    function allMembersCount(){
+      return state.groups.reduce((sum, g) => sum + g.members.length, 0);
+    }
+
+    function thisMonthRange(){
+      const now = new Date();
+      const start = new Date(now.getFullYear(), now.getMonth(), 1);
+      const end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+      return { start, end };
+    }
+
+    function sumMonth(type){
+      const { start, end } = thisMonthRange();
+      let sum = 0;
+      for (const g of state.groups){
+        for (const tx of g.ledger){
+          const dt = new Date(tx.date);
+          if (dt >= start && dt < end && tx.type === type){
+            sum += tx.amount;
+          }
+        }
+      }
+      return sum;
+    }
+
+    function totalNetBalance(){
+      return state.groups.reduce((sum, g) => sum + groupBalance(g), 0);
+    }
+
+    function expectedMonthly(){
+      return state.groups.reduce((sum, g) => sum + (g.contributionAmount * g.members.length), 0);
+    }
+
+    function addContribution(groupId, memberId, amount, dateObj, isBulk=false){
+      const g = groupById(groupId);
+      if (!g) return;
+
+      const date = fmtDate(dateObj || new Date());
+      const tx = {
+        id: uid(),
+        type: "contribution",
+        amount: Number(amount || 0),
+        date,
+        memberId: memberId || null,
+        note: isBulk ? "Bulk contribution" : "Member contribution"
+      };
+      g.ledger.push(tx);
+
+      if (isBulk){
+        let remaining = tx.amount;
+        const per = g.contributionAmount;
+        for (const m of g.members){
+          if (remaining <= 0) break;
+          const add = Math.min(per, remaining);
+          m.totalContributed += add;
+          m.outstanding = Math.max(0, m.outstanding - add);
+          remaining -= add;
+        }
+      } else if (memberId){
+        const m = memberById(g, memberId);
+        if (m){
+          m.totalContributed += tx.amount;
+          m.outstanding = Math.max(0, m.outstanding - tx.amount);
+        }
+      }
+
+      state.audit.unshift(auditItem("Admin", `Contribution recorded in ${g.name}: ${money(tx.amount)} on ${tx.date}`));
+    }
+
+    function addPayout(groupId, label, amount, dateObj){
+      const g = groupById(groupId);
+      if (!g) return;
+
+      const date = fmtDate(dateObj || new Date());
+      const tx = {
+        id: uid(),
+        type: "payout",
+        amount: Number(amount || 0),
+        date,
+        memberId: null,
+        note: label || "Payout"
+      };
+      g.ledger.push(tx);
+
+      state.audit.unshift(auditItem("Admin", `Payout made from ${g.name}: ${money(tx.amount)} on ${tx.date}`));
+    }
+
+    function toast(title, msg){
+      const wrap = document.getElementById("toastWrap");
+      const el = document.createElement("div");
+      el.className = "toast";
+      el.innerHTML = `<div><strong>${escapeHtml(title)}</strong><span>${escapeHtml(msg)}</span></div>`;
+      wrap.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(8px)";
+        el.style.transition = "opacity .18s ease, transform .18s ease";
+        setTimeout(() => el.remove(), 200);
+      }, 2400);
+    }
+
+    function escapeHtml(s){
+      return String(s || "").replace(/[&<>"']/g, (c) => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
+      }[c]));
+    }
+
+    function render(){
+      ensureSelected();
+      renderNowPill();
+      renderMetrics();
+      renderGroups();
+      renderSelectedGroupPanel();
+      renderCalendar();
+      renderDatePanel();
+      renderMembers();
+      renderBank();
+    }
+
+    function renderNowPill(){
+      const now = new Date();
+      const pill = document.getElementById("nowPill");
+      pill.textContent = now.toLocaleString(undefined, { weekday:"short", day:"2-digit", month:"short" }) + " • " + now.toLocaleTimeString(undefined, { hour:"2-digit", minute:"2-digit" });
+    }
+
+    function renderMetrics(){
+      const el = document.getElementById("metrics");
+      const totalMembers = allMembersCount();
+      const monthlyExpected = expectedMonthly();
+      const payoutsThisMonth = sumMonth("payout");
+      const net = totalNetBalance();
+
+      const items = [
+        { label: "Total members", value: totalMembers.toLocaleString(), chip: "All groups", dot: "purple", icon: "👥" },
+        { label: "Monthly contributions", value: money(monthlyExpected), chip: "Expected", dot: "mint", icon: "📅" },
+        { label: "Payouts this month", value: money(payoutsThisMonth), chip: "This month", dot: "pink", icon: "💸" },
+        { label: "Net balance", value: money(net), chip: "Current", dot: "orange", icon: "🏦" }
+      ];
+
+      el.innerHTML = items.map(it => `
+        <div class="metric">
+          <div class="metricLeft">
+            <div class="dot ${it.dot}">${it.icon}</div>
+            <div style="min-width:0;">
+              <p class="metricLabel">${escapeHtml(it.label)}</p>
+              <p class="metricValue" title="${escapeHtml(it.value)}">${escapeHtml(it.value)}</p>
+            </div>
+          </div>
+          <div class="metricRight">
+            <span class="metricChip">${escapeHtml(it.chip)}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderGroups(){
+      const grid = document.getElementById("groupsGrid");
+      const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+
+      const groups = state.groups
+        .filter(g => {
+          if (!q) return true;
+          const inGroup = g.name.toLowerCase().includes(q);
+          const inMember = g.members.some(m => m.name.toLowerCase().includes(q) || m.phone.toLowerCase().includes(q));
+          return inGroup || inMember;
+        });
+
+      if (!groups.length){
+        grid.innerHTML = `<div class="empty">No groups match your search.</div>`;
+        document.getElementById("groupsNote").textContent = "";
+        return;
+      }
+
+      grid.innerHTML = groups.map(g => {
+        const bal = groupBalance(g);
+        const members = g.members.length;
+        const isSelected = g.id === state.selectedGroupId;
+
+        return `
+          <div class="groupCard" style="${isSelected ? "outline: 2px solid rgba(122,92,255,0.35);" : ""}">
+            <div class="groupTop">
+              <div>
+                <p class="groupName">${escapeHtml(g.name)}</p>
+                <p class="groupMeta">${members} members • ${money(g.contributionAmount)} • ${escapeHtml(g.frequency)}</p>
+              </div>
+              <span class="selectedPill">${isSelected ? "Selected" : "Group"}</span>
+            </div>
+
+            <div class="kvRow">
+              <div class="kv">
+                <p class="k">Balance</p>
+                <p class="v">${money(bal)}</p>
+              </div>
+              <div class="kv">
+                <p class="k">Next payout</p>
+                <p class="v">${escapeHtml(g.nextPayoutDate)}</p>
+              </div>
+              <div class="kv">
+                <p class="k">Expected monthly</p>
+                <p class="v">${money(g.contributionAmount * members)}</p>
+              </div>
+              <div class="kv">
+                <p class="k">Ledger items</p>
+                <p class="v">${g.ledger.length}</p>
+              </div>
+            </div>
+
+            <div class="btnRow">
+              <button class="btnTiny" data-act="view" data-id="${g.id}">View group</button>
+              <button class="btnTiny" data-act="add" data-id="${g.id}">Add member</button>
+              <button class="btnTiny" data-act="contrib" data-id="${g.id}">Record contribution</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      document.getElementById("groupsNote").textContent = "Tip: click View group to focus members and actions below.";
+
+      grid.querySelectorAll("button[data-act]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const act = btn.getAttribute("data-act");
+          state.selectedGroupId = id;
+          state.selectedDate = null;
+          render();
+
+          if (act === "view"){
+            toast("Group selected", "Scroll down for members and the calendar breakdown please.");
+          }
+          if (act === "add"){
+            openAddMemberModal(id);
+          }
+          if (act === "contrib"){
+            openContributionModal(id);
+          }
+        });
+      });
+    }
+
+    function renderSelectedGroupPanel(){
+      const panel = document.getElementById("selectedGroupPanel");
+      const hint = document.getElementById("selectedGroupHint");
+
+      const g = groupById(state.selectedGroupId);
+      if (!g){
+        panel.innerHTML = `<div class="empty">Select a group to see members and actions here.</div>`;
+        hint.textContent = "Pick a group";
+        return;
+      }
+
+      hint.textContent = g.name;
+
+      const bal = groupBalance(g);
+      const expected = g.contributionAmount * g.members.length;
+
+      const recent = [...g.ledger]
+        .sort((a,b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 5);
+
+      panel.innerHTML = `
+        <p class="panelTitle">${escapeHtml(g.name)}</p>
+
+        <div class="kvRow" style="grid-template-columns: 1fr 1fr;">
+          <div class="kv">
+            <p class="k">Balance</p>
+            <p class="v">${money(bal)}</p>
+          </div>
+          <div class="kv">
+            <p class="k">Expected monthly</p>
+            <p class="v">${money(expected)}</p>
+          </div>
+        </div>
+
+        <div class="btnRow" style="margin-top: 10px;">
+          <button class="btnTiny" id="sgAddMember">Add member</button>
+          <button class="btnTiny" id="sgContribution">Record contribution</button>
+          <button class="btnTiny" id="sgPayout">Make payout</button>
+        </div>
+
+        <div style="margin-top: 12px;">
+          <p class="panelTitle" style="margin-bottom: 10px;">Recent activity</p>
+          ${recent.length ? `
+            <div style="display:grid; gap:8px;">
+              ${recent.map(tx => `
+                <div class="kv" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                  <div>
+                    <div style="font-weight:900; font-size:13px;">
+                      ${tx.type === "contribution" ? "Contribution" : "Payout"}
+                      <span style="color: var(--muted); font-weight:800;"> • ${escapeHtml(tx.date)}</span>
+                    </div>
+                    <div style="color: var(--muted); font-size:12px;">${escapeHtml(tx.note || "")}</div>
+                  </div>
+                  <div style="font-weight:900; white-space:nowrap;">
+                    ${tx.type === "contribution" ? "+" : "−"} ${money(tx.amount)}
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          ` : `<div class="empty">No activity yet for this group.</div>`}
+        </div>
+      `;
+
+      document.getElementById("sgAddMember").onclick = () => openAddMemberModal(g.id);
+      document.getElementById("sgContribution").onclick = () => openContributionModal(g.id);
+      document.getElementById("sgPayout").onclick = () => openPayoutModal(g.id);
+    }
+
+    function renderCalendar(){
+      const monthTitleEl = document.getElementById("monthTitle");
+      monthTitleEl.textContent = monthName(state.calMonth);
+
+      const dowEl = document.getElementById("calDow");
+      const dows = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+      dowEl.innerHTML = dows.map(d => `<div class="dow">${d}</div>`).join("");
+
+      const grid = document.getElementById("calGrid");
+      grid.innerHTML = "";
+
+      const monthStart = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth(), 1);
+      const monthEnd = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() + 1, 0);
+
+      const startDow = (monthStart.getDay() + 6) % 7;
+      const totalDays = monthEnd.getDate();
+
+      const prevMonthEnd = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth(), 0);
+      const prevDays = prevMonthEnd.getDate();
+
+      const cells = [];
+      for (let i = 0; i < startDow; i++){
+        const dayNum = prevDays - (startDow - 1 - i);
+        const d = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() - 1, dayNum);
+        cells.push({ date: fmtDate(d), label: dayNum, muted: true });
+      }
+      for (let i = 1; i <= totalDays; i++){
+        const d = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth(), i);
+        cells.push({ date: fmtDate(d), label: i, muted: false });
+      }
+      while (cells.length % 7 !== 0){
+        const nextDay = cells.length - (startDow + totalDays) + 1;
+        const d = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() + 1, nextDay);
+        cells.push({ date: fmtDate(d), label: nextDay, muted: true });
+      }
+
+      const daily = buildDailySummary(state.calMonth);
+
+      grid.innerHTML = cells.map(c => {
+        const info = daily[c.date] || { expected:0, received:0, payouts:0, items:[] };
+
+        const badges = [];
+        if (info.expected > 0) badges.push(`<span class="badge warn">Expected ${money(info.expected)}</span>`);
+        if (info.received > 0) badges.push(`<span class="badge good">Received ${money(info.received)}</span>`);
+        if (info.payouts > 0) badges.push(`<span class="badge bad">Payouts ${money(info.payouts)}</span>`);
+
+        const selected = state.selectedDate === c.date;
+        const outline = selected ? "outline: 2px solid rgba(122,92,255,0.35);" : "";
+
+        return `
+          <div class="day ${c.muted ? "muted" : ""}" data-date="${c.date}" style="${outline}">
+            <div class="dayNum">${c.label}</div>
+            <div class="badges">${badges.slice(0,2).join("")}</div>
+          </div>
+        `;
+      }).join("");
+
+      grid.querySelectorAll(".day").forEach(dayEl => {
+        dayEl.addEventListener("click", () => {
+          state.selectedDate = dayEl.getAttribute("data-date");
+          renderDatePanel();
+          renderCalendar();
+        });
+      });
+    }
+
+    function buildDailySummary(calMonth){
+      const map = {};
+      const y = calMonth.getFullYear();
+      const m = calMonth.getMonth();
+
+      for (const g of state.groups){
+        const expectedDate = fmtDate(new Date(y, m, 1));
+        map[expectedDate] = map[expectedDate] || initDay();
+        map[expectedDate].expected += g.contributionAmount * g.members.length;
+        map[expectedDate].items.push({
+          type: "expected",
+          group: g.name,
+          label: "Monthly expected",
+          amount: g.contributionAmount * g.members.length
+        });
+
+        for (const tx of g.ledger){
+          const dt = new Date(tx.date);
+          if (dt.getFullYear() !== y || dt.getMonth() !== m) continue;
+          const key = fmtDate(dt);
+          map[key] = map[key] || initDay();
+
+          if (tx.type === "contribution"){
+            map[key].received += tx.amount;
+            map[key].items.push({
+              type: "received",
+              group: g.name,
+              label: tx.note || "Contribution",
+              amount: tx.amount,
+              memberId: tx.memberId
+            });
+          }
+          if (tx.type === "payout"){
+            map[key].payouts += tx.amount;
+            map[key].items.push({
+              type: "payout",
+              group: g.name,
+              label: tx.note || "Payout",
+              amount: tx.amount
+            });
+          }
+        }
+      }
+
+      return map;
+
+      function initDay(){
+        return { expected:0, received:0, payouts:0, items:[] };
+      }
+    }
+
+    function renderDatePanel(){
+      const panel = document.getElementById("datePanel");
+      const hint = document.getElementById("dateHint");
+
+      if (!state.selectedDate){
+        hint.textContent = "Tap a date";
+        panel.innerHTML = `<div class="empty">Click a date in the calendar to see a breakdown by group and member.</div>`;
+        return;
+      }
+
+      hint.textContent = state.selectedDate;
+
+      const calMonth = state.calMonth;
+      const y = calMonth.getFullYear();
+      const m = calMonth.getMonth();
+      const daily = buildDailySummary(calMonth);
+      const info = daily[state.selectedDate] || { expected:0, received:0, payouts:0, items:[] };
+
+      if (!info.items.length){
+        panel.innerHTML = `<div class="empty">No activity for this date.</div>`;
+        return;
+      }
+
+      const rows = info.items.map(it => {
+        const tag = it.type === "expected" ? "Expected" : it.type === "received" ? "Received" : "Payout";
+        const chipClass = it.type === "received" ? "ok" : it.type === "expected" ? "due" : "late";
+        return `
+          <tr>
+            <td><span class="status ${chipClass}">${tag}</span></td>
+            <td style="font-weight:900;">${escapeHtml(it.group)}</td>
+            <td>${escapeHtml(it.label)}</td>
+            <td style="font-weight:900; white-space:nowrap;">${money(it.amount)}</td>
+          </tr>
+        `;
+      }).join("");
+
+      panel.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Group</th>
+              <th>What</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    function renderMembers(){
+      const wrap = document.getElementById("membersWrap");
+      const hint = document.getElementById("memberHint");
+
+      const g = groupById(state.selectedGroupId);
+      if (!g){
+        hint.textContent = "Shows selected group members";
+        wrap.innerHTML = `<div class="empty">Select a group to view members.</div>`;
+        return;
+      }
+
+      hint.textContent = g.name;
+
+      const rows = g.members.map(m => {
+        const status = m.outstanding <= 0 ? { t:"Paid", c:"ok" } : (m.outstanding < g.contributionAmount ? { t:"Partial", c:"due" } : { t:"Due", c:"late" });
+
+        return `
+          <tr>
+            <td style="font-weight:900;">${escapeHtml(m.name)}<div style="color:var(--muted); font-size:12px; font-weight:800;">${escapeHtml(m.phone)}</div></td>
+            <td>${escapeHtml(m.joinDate)}</td>
+            <td><span class="status ${status.c}">${status.t}</span></td>
+            <td style="white-space:nowrap; font-weight:900;">${money(m.totalContributed)}</td>
+            <td style="white-space:nowrap; font-weight:900;">${money(m.outstanding)}</td>
+            <td>
+              <div class="rowActions">
+                <button class="btnTiny" data-mact="pay" data-mid="${m.id}">Record payment</button>
+                <button class="btnTiny" data-mact="hist" data-mid="${m.id}">History</button>
+                <button class="btnTiny" data-mact="rm" data-mid="${m.id}">Remove</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      wrap.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Join date</th>
+              <th>Status</th>
+              <th>Total contributed</th>
+              <th>Outstanding</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+
+      wrap.querySelectorAll("button[data-mact]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const act = btn.getAttribute("data-mact");
+          const mid = btn.getAttribute("data-mid");
+          if (act === "pay") openContributionModal(g.id, mid);
+          if (act === "hist") openMemberHistoryModal(g.id, mid);
+          if (act === "rm") openRemoveMemberModal(g.id, mid);
+        });
+      });
+    }
+
+    function renderBank(){
+      const grid = document.getElementById("bankGrid");
+      const b = state.bank;
+
+      const masked = b.accountNumber ? b.accountNumber.replace(/\d(?=\d{4})/g, "•") : "••••";
+
+      grid.innerHTML = `
+        <div class="kv">
+          <p class="k">Bank name</p>
+          <p class="v">${escapeHtml(b.bankName)}</p>
+        </div>
+        <div class="kv">
+          <p class="k">Account holder</p>
+          <p class="v">${escapeHtml(b.accountHolder)}</p>
+        </div>
+        <div class="kv">
+          <p class="k">Account number</p>
+          <p class="v">${escapeHtml(masked)}</p>
+        </div>
+        <div class="kv">
+          <p class="k">Branch code</p>
+          <p class="v">${escapeHtml(b.branchCode)}</p>
+        </div>
+      `;
+    }
+
+    function openModal({ title, sub, bodyHtml, confirmText, onConfirm }){
+      state.lastModal = { onConfirm };
+
+      const overlay = document.getElementById("modalOverlay");
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden", "false");
+
+      document.getElementById("modalTitle").textContent = title || "Modal";
+      document.getElementById("modalSub").textContent = sub || "";
+
+      document.getElementById("modalBody").innerHTML = bodyHtml || "";
+
+      const confirmBtn = document.getElementById("confirmModal");
+      confirmBtn.querySelector("span").textContent = confirmText || "Confirm";
+    }
+
+    function closeModal(){
+      const overlay = document.getElementById("modalOverlay");
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+      state.lastModal = null;
+    }
+
+    function openAddMemberModal(groupId){
+      const g = groupById(groupId || state.selectedGroupId);
+      if (!g) return;
+
+      openModal({
+        title: "Add member",
+        sub: "Minimal details, quick save",
+        confirmText: "Add member",
+        bodyHtml: `
+          <div class="formGrid">
+            <div>
+              <label>Group</label>
+              <select id="amGroup">
+                ${state.groups.map(x => `<option value="${x.id}" ${x.id===g.id ? "selected" : ""}>${escapeHtml(x.name)}</option>`).join("")}
+              </select>
+            </div>
+            <div class="twoCols">
+              <div>
+                <label>Full name</label>
+                <input id="amName" placeholder="e.g. Lerato Molefe" />
+              </div>
+              <div>
+                <label>Phone number</label>
+                <input id="amPhone" placeholder="e.g. 073 800 4455" />
+              </div>
+            </div>
+            <div class="twoCols">
+              <div>
+                <label>Join date</label>
+                <input id="amJoin" type="date" value="${fmtDate(new Date())}" />
+              </div>
+              <div>
+                <label>Starting outstanding</label>
+                <input id="amOutstanding" type="number" min="0" step="1" placeholder="0" />
+              </div>
+            </div>
+            <div class="note">This will be added to the selected group. You can edit later.</div>
+          </div>
+        `,
+        onConfirm: () => {
+          const gid = document.getElementById("amGroup").value;
+          const name = document.getElementById("amName").value.trim();
+          const phone = document.getElementById("amPhone").value.trim();
+          const join = document.getElementById("amJoin").value || fmtDate(new Date());
+          const outstanding = Number(document.getElementById("amOutstanding").value || 0);
+
+          if (!name || !phone){
+            toast("Missing info", "Please add name and phone number.");
+            return;
+          }
+
+          const gg = groupById(gid);
+          gg.members.push({
+            id: uid(),
+            name,
+            phone,
+            joinDate: join,
+            monthlyDue: gg.contributionAmount,
+            totalContributed: 0,
+            outstanding
+          });
+
+          state.audit.unshift(auditItem("Admin", `Member added to ${gg.name}: ${name}`));
+          state.selectedGroupId = gid;
+
+          closeModal();
+          toast("Member added", `${name} added to ${gg.name}.`);
+          render();
+        }
+      });
+    }
+
+    function openContributionModal(groupId, memberId){
+      const g = groupById(groupId || state.selectedGroupId);
+      if (!g) return;
+
+      const memberOptions = [`<option value="">Bulk contribution</option>`]
+        .concat(g.members.map(m => `<option value="${m.id}" ${m.id===memberId ? "selected" : ""}>${escapeHtml(m.name)}</option>`))
+        .join("");
+
+      openModal({
+        title: "Record contribution",
+        sub: "Pick a group, member or bulk, then amount and date",
+        confirmText: "Record",
+        bodyHtml: `
+          <div class="formGrid">
+            <div class="twoCols">
+              <div>
+                <label>Group</label>
+                <select id="rcGroup">
+                  ${state.groups.map(x => `<option value="${x.id}" ${x.id===g.id ? "selected" : ""}>${escapeHtml(x.name)}</option>`).join("")}
+                </select>
+              </div>
+              <div>
+                <label>Member</label>
+                <select id="rcMember">${memberOptions}</select>
+              </div>
+            </div>
+            <div class="twoCols">
+              <div>
+                <label>Amount</label>
+                <input id="rcAmount" type="number" min="0" step="1" value="${g.contributionAmount}" />
+              </div>
+              <div>
+                <label>Date</label>
+                <input id="rcDate" type="date" value="${fmtDate(new Date())}" />
+              </div>
+            </div>
+            <div>
+              <label>Note</label>
+              <input id="rcNote" placeholder="Optional" />
+            </div>
+            <div class="note">Bulk will try allocate across members starting from the top.</div>
+          </div>
+        `,
+        onConfirm: () => {
+          const gid = document.getElementById("rcGroup").value;
+          const mid = document.getElementById("rcMember").value;
+          const amt = Number(document.getElementById("rcAmount").value || 0);
+          const date = new Date(document.getElementById("rcDate").value || fmtDate(new Date()));
+          const note = document.getElementById("rcNote").value.trim();
+
+          if (!amt || amt <= 0){
+            toast("Invalid amount", "Please enter an amount above 0.");
+            return;
+          }
+
+          const gg = groupById(gid);
+          if (!gg){
+            toast("Missing group", "Please select a group.");
+            return;
+          }
+
+          if (!mid){
+            addContribution(gid, null, amt, date, true);
+            if (note) gg.ledger[gg.ledger.length - 1].note = note;
+            toast("Contribution recorded", `Bulk: ${money(amt)} in ${gg.name}.`);
+          } else {
+            addContribution(gid, mid, amt, date, false);
+            if (note) gg.ledger[gg.ledger.length - 1].note = note;
+            const mm = memberById(gg, mid);
+            toast("Contribution recorded", `${mm ? mm.name : "Member"}: ${money(amt)} in ${gg.name}.`);
+          }
+
+          state.selectedGroupId = gid;
+          closeModal();
+          render();
+        }
+      });
+
+      document.getElementById("rcGroup").addEventListener("change", (e) => {
+        const gid = e.target.value;
+        const gg = groupById(gid);
+        const memberSel = document.getElementById("rcMember");
+        memberSel.innerHTML = `<option value="">Bulk contribution</option>` + gg.members.map(m => `<option value="${m.id}">${escapeHtml(m.name)}</option>`).join("");
+        document.getElementById("rcAmount").value = gg.contributionAmount;
+      });
+    }
+
+    function openPayoutModal(groupId){
+      const g = groupById(groupId || state.selectedGroupId);
+      if (!g) return;
+
+      openModal({
+        title: "Make payout",
+        sub: "Confirm amount and bank source",
+        confirmText: "Make payout",
+        bodyHtml: `
+          <div class="formGrid">
+            <div>
+              <label>Group</label>
+              <select id="mpGroup">
+                ${state.groups.map(x => `<option value="${x.id}" ${x.id===g.id ? "selected" : ""}>${escapeHtml(x.name)}</option>`).join("")}
+              </select>
+            </div>
+            <div class="twoCols">
+              <div>
+                <label>Amount</label>
+                <input id="mpAmount" type="number" min="0" step="1" placeholder="0" />
+              </div>
+              <div>
+                <label>Date</label>
+                <input id="mpDate" type="date" value="${fmtDate(new Date())}" />
+              </div>
+            </div>
+            <div>
+              <label>Who is this for</label>
+              <input id="mpLabel" placeholder="e.g. Payout to Lerato" />
+            </div>
+            <div class="kv">
+              <p class="k">Payout source bank</p>
+              <p class="v">${escapeHtml(state.bank.bankName)} • ${escapeHtml(state.bank.accountHolder)}</p>
+              <p class="k" style="margin-top:8px;">Account</p>
+              <p class="v">${escapeHtml(state.bank.accountNumber.replace(/\d(?=\d{4})/g, "•"))}</p>
+            </div>
+            <div class="note">Tip: keep label simple so audit logs are clean.</div>
+          </div>
+        `,
+        onConfirm: () => {
+          const gid = document.getElementById("mpGroup").value;
+          const amt = Number(document.getElementById("mpAmount").value || 0);
+          const date = new Date(document.getElementById("mpDate").value || fmtDate(new Date()));
+          const label = document.getElementById("mpLabel").value.trim() || "Payout";
+
+          if (!amt || amt <= 0){
+            toast("Invalid amount", "Please enter an amount above 0.");
+            return;
+          }
+
+          const gg = groupById(gid);
+          const bal = groupBalance(gg);
+          if (amt > bal){
+            toast("Not enough balance", `Available: ${money(bal)}. Please reduce payout.`);
+            return;
+          }
+
+          addPayout(gid, label, amt, date);
+          state.selectedGroupId = gid;
+
+          closeModal();
+          toast("Payout made", `${money(amt)} from ${gg.name}.`);
+          render();
+        }
+      });
+    }
+
+    function openEditBankModal(){
+      const b = state.bank;
+
+      openModal({
+        title: "Edit bank details",
+        sub: "This is where contributions go and payouts are made from",
+        confirmText: "Save",
+        bodyHtml: `
+          <div class="formGrid">
+            <div class="twoCols">
+              <div>
+                <label>Bank name</label>
+                <input id="bkName" value="${escapeHtml(b.bankName)}" />
+              </div>
+              <div>
+                <label>Account holder</label>
+                <input id="bkHolder" value="${escapeHtml(b.accountHolder)}" />
+              </div>
+            </div>
+            <div class="twoCols">
+              <div>
+                <label>Account number</label>
+                <input id="bkNum" value="${escapeHtml(b.accountNumber)}" />
+              </div>
+              <div>
+                <label>Branch code</label>
+                <input id="bkBranch" value="${escapeHtml(b.branchCode)}" />
+              </div>
+            </div>
+            <div class="note">Please double check before saving.</div>
+          </div>
+        `,
+        onConfirm: () => {
+          const bankName = document.getElementById("bkName").value.trim();
+          const accountHolder = document.getElementById("bkHolder").value.trim();
+          const accountNumber = document.getElementById("bkNum").value.trim();
+          const branchCode = document.getElementById("bkBranch").value.trim();
+
+          if (!bankName || !accountHolder || !accountNumber || !branchCode){
+            toast("Missing info", "Please fill all bank fields.");
+            return;
+          }
+
+          state.bank = { bankName, accountHolder, accountNumber, branchCode };
+          state.audit.unshift(auditItem("Admin", "Bank details updated"));
+
+          closeModal();
+          toast("Saved", "Bank details updated.");
+          render();
+        }
+      });
+    }
+
+    function openCreateGroupModal(){
+      openModal({
+        title: "Create group",
+        sub: "Name, contribution amount, frequency, next payout date",
+        confirmText: "Create",
+        bodyHtml: `
+          <div class="formGrid">
+            <div>
+              <label>Group name</label>
+              <input id="cgName" placeholder="e.g. December Groceries" />
+            </div>
+            <div class="twoCols">
+              <div>
+                <label>Contribution amount</label>
+                <input id="cgAmt" type="number" min="0" step="1" placeholder="e.g. 300" />
+              </div>
+              <div>
+                <label>Frequency</label>
+                <select id="cgFreq">
+                  <option>Monthly</option>
+                  <option>Weekly</option>
+                  <option>Fortnightly</option>
+                </select>
+              </div>
+            </div>
+            <div class="twoCols">
+              <div>
+                <label>Next payout date</label>
+                <input id="cgPayout" type="date" value="${fmtDate(new Date())}" />
+              </div>
+              <div>
+                <label>Starting balance</label>
+                <input id="cgBal" type="number" min="0" step="1" placeholder="0" />
+              </div>
+            </div>
+            <div class="note">You can add members after creating the group.</div>
+          </div>
+        `,
+        onConfirm: () => {
+          const name = document.getElementById("cgName").value.trim();
+          const amt = Number(document.getElementById("cgAmt").value || 0);
+          const freq = document.getElementById("cgFreq").value;
+          const payout = document.getElementById("cgPayout").value || fmtDate(new Date());
+          const startBal = Number(document.getElementById("cgBal").value || 0);
+
+          if (!name || !amt || amt <= 0){
+            toast("Missing info", "Please add group name and contribution amount.");
+            return;
+          }
+
+          const g = {
+            id: uid(),
+            name,
+            contributionAmount: amt,
+            frequency: freq,
+            nextPayoutDate: payout,
+            members: [],
+            ledger: []
+          };
+
+          state.groups.unshift(g);
+          if (startBal > 0){
+            addContribution(g.id, null, startBal, new Date(), true);
+            const last = g.ledger[g.ledger.length - 1];
+            if (last) last.note = "Starting balance";
+          }
+
+          state.audit.unshift(auditItem("Admin", `Group created: ${name}`));
+          state.selectedGroupId = g.id;
+
+          closeModal();
+          toast("Group created", name);
+          render();
+        }
+      });
+    }
+
+    function openMemberHistoryModal(groupId, memberId){
+      const g = groupById(groupId);
+      const m = memberById(g, memberId);
+      if (!g || !m) return;
+
+      const items = g.ledger
+        .filter(tx => tx.type === "contribution" && tx.memberId === m.id)
+        .sort((a,b) => new Date(b.date) - new Date(a.date));
+
+      openModal({
+        title: "Member history",
+        sub: m.name,
+        confirmText: "Close",
+        bodyHtml: `
+          ${items.length ? `
+            <div style="display:grid; gap:8px;">
+              ${items.map(tx => `
+                <div class="kv" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                  <div>
+                    <div style="font-weight:900; font-size:13px;">${escapeHtml(tx.date)}</div>
+                    <div style="color: var(--muted); font-size:12px;">${escapeHtml(tx.note || "Contribution")}</div>
+                  </div>
+                  <div style="font-weight:900; white-space:nowrap;">${money(tx.amount)}</div>
+                </div>
+              `).join("")}
+            </div>
+          ` : `<div class="empty">No member contributions found yet.</div>`}
+        `,
+        onConfirm: () => closeModal()
+      });
+    }
+
+    function openRemoveMemberModal(groupId, memberId){
+      const g = groupById(groupId);
+      const m = memberById(g, memberId);
+      if (!g || !m) return;
+
+      openModal({
+        title: "Remove member",
+        sub: `This will remove ${m.name} from ${g.name}`,
+        confirmText: "Remove",
+        bodyHtml: `
+          <div class="empty">
+            Are you sure you want to remove this member?
+            <div style="margin-top:10px; font-weight:900; color: var(--text);">${escapeHtml(m.name)}</div>
+            <div style="margin-top:4px;">${escapeHtml(m.phone)}</div>
+          </div>
+          <div class="note">This does not delete ledger history in this demo.</div>
+        `,
+        onConfirm: () => {
+          g.members = g.members.filter(x => x.id !== m.id);
+          state.audit.unshift(auditItem("Admin", `Member removed from ${g.name}: ${m.name}`));
+          closeModal();
+          toast("Removed", `${m.name} removed from ${g.name}.`);
+          render();
+        }
+      });
+    }
+
+    function openAuditModal(){
+      const items = state.audit.slice(0, 30);
+
+      openModal({
+        title: "Audit log",
+        sub: "Money actions and changes",
+        confirmText: "Close",
+        bodyHtml: `
+          ${items.length ? `
+            <div style="display:grid; gap:8px;">
+              ${items.map(a => `
+                <div class="kv">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                    <div style="font-weight:900; font-size:13px;">${escapeHtml(a.message)}</div>
+                    <div class="pill" style="font-size:11px;">${new Date(a.at).toLocaleString(undefined,{hour:"2-digit",minute:"2-digit"})}</div>
+                  </div>
+                  <div style="color: var(--muted); font-size:12px; margin-top:6px;">
+                    ${escapeHtml(a.actor)} • ${new Date(a.at).toLocaleDateString()}
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          ` : `<div class="empty">No audit items yet.</div>`}
+        `,
+        onConfirm: () => closeModal()
+      });
+    }
+
+    function openWalletModal(){
+      const net = totalNetBalance();
+      const exp = expectedMonthly();
+      const rec = sumMonth("contribution");
+      const pay = sumMonth("payout");
+
+      openModal({
+        title: "Wallet",
+        sub: "Quick totals",
+        confirmText: "Close",
+        bodyHtml: `
+          <div class="kvRow" style="grid-template-columns: 1fr 1fr;">
+            <div class="kv">
+              <p class="k">Net balance</p>
+              <p class="v">${money(net)}</p>
+            </div>
+            <div class="kv">
+              <p class="k">Monthly expected</p>
+              <p class="v">${money(exp)}</p>
+            </div>
+            <div class="kv">
+              <p class="k">Received this month</p>
+              <p class="v">${money(rec)}</p>
+            </div>
+            <div class="kv">
+              <p class="k">Payouts this month</p>
+              <p class="v">${money(pay)}</p>
+            </div>
+          </div>
+          <div class="note">In v1 this is just a view. Later you can connect real bank data.</div>
+        `,
+        onConfirm: () => closeModal()
+      });
+    }
+
+    function wire(){
+      document.getElementById("openAddMember").onclick = () => openAddMemberModal(state.selectedGroupId);
+      document.getElementById("openContribution").onclick = () => openContributionModal(state.selectedGroupId);
+      document.getElementById("openPayout").onclick = () => openPayoutModal(state.selectedGroupId);
+
+      document.getElementById("editBankBtn").onclick = () => openEditBankModal();
+      document.getElementById("createGroupBtn").onclick = () => openCreateGroupModal();
+
+      document.getElementById("resetDemoBtn").onclick = () => {
