@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Stokvel Management Dashboard</title>
+  <title>NASASA Stokvel Management Dashboard</title>
   <style>
     :root{
-      --bg1:#f7f6ff;
-      --bg2:#f9f2ff;
+      --bg1:#ffffff;
+      --bg2:#ffffff;
       --card:#ffffffcc;
       --stroke:#e9e8f5;
       --text:#12131a;
@@ -17,13 +17,13 @@
       --radius: 22px;
       --radius2: 16px;
 
-      --purple:#7a5cff;
-      --purple2:#b9a8ff;
+      --purple:#2f6fe5;
+      --purple2:#8db4ff;
       --mint:#25c7a6;
       --pink:#ff6aa0;
       --orange:#ffb020;
 
-      --btn:#12131a;
+      --btn:#1f64e6;
       --btnText:#ffffff;
     }
 
@@ -33,11 +33,7 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 10% 10%, rgba(122, 92, 255, 0.18), transparent 55%),
-        radial-gradient(900px 500px at 90% 25%, rgba(255, 106, 160, 0.14), transparent 55%),
-        radial-gradient(900px 700px at 75% 90%, rgba(37, 199, 166, 0.12), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
+      background: var(--bg1);
     }
 
     .wrap{
@@ -52,7 +48,7 @@
       z-index: 20;
       padding: 10px 0 14px;
       backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(247,246,255,0.95), rgba(247,246,255,0.55));
+      background: rgba(255,255,255,0.95);
       border-bottom: 1px solid rgba(233,232,245,0.9);
     }
 
@@ -64,6 +60,44 @@
       max-width: 1180px;
       margin: 0 auto;
       padding: 0 16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 0;
+    }
+    .brandLogo{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid rgba(31, 100, 230, 0.2);
+      box-shadow: 0 10px 20px rgba(31, 100, 230, 0.12);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+    .brandLogo img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .brandText{
+      display:flex;
+      flex-direction:column;
+      line-height: 1.05;
+    }
+    .brandName{
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .brandTag{
+      font-size: 12px;
+      color: var(--muted);
     }
 
     .search{
@@ -250,7 +284,7 @@
       box-shadow: 0 10px 20px rgba(18,19,26,0.10);
       flex: 0 0 auto;
     }
-    .dot.purple{ background: linear-gradient(135deg, rgba(122,92,255,1), rgba(185,168,255,1)); }
+    .dot.purple{ background: linear-gradient(135deg, rgba(31,100,230,1), rgba(141,180,255,1)); }
     .dot.mint{ background: linear-gradient(135deg, rgba(37,199,166,1), rgba(165,255,233,1)); color:#063a33; }
     .dot.pink{ background: linear-gradient(135deg, rgba(255,106,160,1), rgba(255,192,221,1)); color:#3b0f1f; }
     .dot.orange{ background: linear-gradient(135deg, rgba(255,176,32,1), rgba(255,225,166,1)); color:#4b2b00; }
@@ -656,6 +690,16 @@
 
   <div class="topbar">
     <div class="topbarInner">
+      <div class="brand">
+        <a class="brandLogo" href="https://www.nasasa.co.za/" target="_blank" rel="noreferrer">
+          <img src="https://www.nasasa.co.za/wp-content/uploads/2023/11/logo.png" alt="NASASA logo" />
+        </a>
+        <div class="brandText">
+          <div class="brandName">NASASA Stokvel</div>
+          <div class="brandTag">Member management hub</div>
+        </div>
+      </div>
+
       <div class="search" role="search">
         <span aria-hidden="true">🔎</span>
         <input id="searchInput" placeholder="Search groups or members" />
@@ -678,8 +722,8 @@
   <div class="wrap">
     <div class="titleRow">
       <div>
-        <h1>Stokvel Dashboard</h1>
-        <p class="subtitle">One place for groups, members, contributions, payouts, and monthly income.</p>
+        <h1>NASASA Stokvel Dashboard</h1>
+        <p class="subtitle">Blue-branded workspace for groups, members, contributions, payouts, and monthly income.</p>
       </div>
       <div class="pill" id="nowPill"></div>
     </div>
