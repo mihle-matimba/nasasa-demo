@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Stokvel Management Dashboard</title>
+  <title>NASASA Stokvel Management Dashboard</title>
   <style>
     :root{
-      --bg1:#f7f6ff;
-      --bg2:#f9f2ff;
+      --bg1:#ffffff;
+      --bg2:#ffffff;
       --card:#ffffffcc;
       --stroke:#e9e8f5;
       --text:#12131a;
@@ -17,13 +17,13 @@
       --radius: 22px;
       --radius2: 16px;
 
-      --purple:#7a5cff;
-      --purple2:#b9a8ff;
+      --purple:#2f6fe5;
+      --purple2:#8db4ff;
       --mint:#25c7a6;
       --pink:#ff6aa0;
       --orange:#ffb020;
 
-      --btn:#12131a;
+      --btn:#1f64e6;
       --btnText:#ffffff;
     }
 
@@ -33,11 +33,7 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 10% 10%, rgba(122, 92, 255, 0.18), transparent 55%),
-        radial-gradient(900px 500px at 90% 25%, rgba(255, 106, 160, 0.14), transparent 55%),
-        radial-gradient(900px 700px at 75% 90%, rgba(37, 199, 166, 0.12), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
+      background: var(--bg1);
     }
 
     .wrap{
@@ -52,7 +48,7 @@
       z-index: 20;
       padding: 10px 0 14px;
       backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(247,246,255,0.95), rgba(247,246,255,0.55));
+      background: rgba(255,255,255,0.95);
       border-bottom: 1px solid rgba(233,232,245,0.9);
     }
 
@@ -64,6 +60,44 @@
       max-width: 1180px;
       margin: 0 auto;
       padding: 0 16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 0;
+    }
+    .brandLogo{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid rgba(31, 100, 230, 0.2);
+      box-shadow: 0 10px 20px rgba(31, 100, 230, 0.12);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+    .brandLogo img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .brandText{
+      display:flex;
+      flex-direction:column;
+      line-height: 1.05;
+    }
+    .brandName{
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .brandTag{
+      font-size: 12px;
+      color: var(--muted);
     }
 
     .search{
@@ -222,6 +256,62 @@
       gap: 10px;
     }
 
+    .chartsGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .chartCard{
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.75);
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .chartHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .chartTitle{
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      margin:0;
+    }
+    .chartSub{
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .chartCanvas{
+      width: 100%;
+      height: 220px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid var(--stroke);
+    }
+    .chartLegend{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .legendItem{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+    }
+    .legendSwatch{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--purple);
+    }
+
     .metric{
       padding: 14px;
       border-radius: 18px;
@@ -250,7 +340,7 @@
       box-shadow: 0 10px 20px rgba(18,19,26,0.10);
       flex: 0 0 auto;
     }
-    .dot.purple{ background: linear-gradient(135deg, rgba(122,92,255,1), rgba(185,168,255,1)); }
+    .dot.purple{ background: linear-gradient(135deg, rgba(31,100,230,1), rgba(141,180,255,1)); }
     .dot.mint{ background: linear-gradient(135deg, rgba(37,199,166,1), rgba(165,255,233,1)); color:#063a33; }
     .dot.pink{ background: linear-gradient(135deg, rgba(255,106,160,1), rgba(255,192,221,1)); color:#3b0f1f; }
     .dot.orange{ background: linear-gradient(135deg, rgba(255,176,32,1), rgba(255,225,166,1)); color:#4b2b00; }
@@ -643,6 +733,7 @@
     @media (min-width: 760px){
       .quickActions{ grid-template-columns: repeat(3, 1fr); }
       .metrics{ grid-template-columns: repeat(4, 1fr); }
+      .chartsGrid{ grid-template-columns: repeat(2, 1fr); }
       .grid2{ grid-template-columns: 2fr 1fr; }
       .split{ grid-template-columns: 1.5fr 1fr; }
       .groupsGrid{ grid-template-columns: repeat(2, 1fr); }
@@ -656,6 +747,16 @@
 
   <div class="topbar">
     <div class="topbarInner">
+      <div class="brand">
+        <a class="brandLogo" href="https://www.nasasa.co.za/" target="_blank" rel="noreferrer">
+          <img src="https://www.nasasa.co.za/wp-content/uploads/2023/11/logo.png" alt="NASASA logo" />
+        </a>
+        <div class="brandText">
+          <div class="brandName">NASASA Stokvel</div>
+          <div class="brandTag">Member management hub</div>
+        </div>
+      </div>
+
       <div class="search" role="search">
         <span aria-hidden="true">🔎</span>
         <input id="searchInput" placeholder="Search groups or members" />
@@ -678,8 +779,8 @@
   <div class="wrap">
     <div class="titleRow">
       <div>
-        <h1>Stokvel Dashboard</h1>
-        <p class="subtitle">One place for groups, members, contributions, payouts, and monthly income.</p>
+        <h1>NASASA Stokvel Dashboard</h1>
+        <p class="subtitle">Blue-branded workspace for groups, members, contributions, payouts, and monthly income.</p>
       </div>
       <div class="pill" id="nowPill"></div>
     </div>
@@ -713,6 +814,39 @@
       </div>
 
       <div class="metrics" id="metrics"></div>
+    </section>
+
+    <section class="card section" aria-label="Revenue analytics">
+      <div class="sectionHeader">
+        <h2>Revenue analytics</h2>
+        <div class="hint">Demo charts with live UI rendering</div>
+      </div>
+
+      <div class="chartsGrid">
+        <div class="chartCard">
+          <div class="chartHeader">
+            <p class="chartTitle">Monthly revenue trend</p>
+            <span class="pill">Last 6 months</span>
+          </div>
+          <canvas class="chartCanvas" id="revenueTrendChart" width="640" height="240"></canvas>
+          <div class="chartLegend">
+            <span class="legendItem"><span class="legendSwatch" style="background:#1f64e6;"></span>Total revenue</span>
+            <span class="legendItem"><span class="legendSwatch" style="background:#8db4ff;"></span>Projected</span>
+          </div>
+        </div>
+
+        <div class="chartCard">
+          <div class="chartHeader">
+            <p class="chartTitle">Revenue by group</p>
+            <span class="pill">Current month</span>
+          </div>
+          <canvas class="chartCanvas" id="revenueGroupChart" width="640" height="240"></canvas>
+          <div class="chartLegend">
+            <span class="legendItem"><span class="legendSwatch" style="background:#1f64e6;"></span>Contributions</span>
+            <span class="legendItem"><span class="legendSwatch" style="background:#ffb020;"></span>Payouts</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="grid2" aria-label="Groups and side panel">
@@ -853,7 +987,18 @@
       selectedGroupId: null,
       calMonth: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
       selectedDate: null,
-      lastModal: null
+      lastModal: null,
+      revenueSeries: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+        actual: [18500, 21200, 19800, 24350, 26500, 28700],
+        projected: [19000, 21800, 21000, 25500, 27500, 29800]
+      },
+      groupRevenue: [
+        { name: "Siyakhula Groceries", contributions: 8400, payouts: 3200 },
+        { name: "Mkansi Savings Circle", contributions: 11200, payouts: 5400 },
+        { name: "School Fees Pool", contributions: 6100, payouts: 2400 },
+        { name: "Masibuyele Burial", contributions: 9400, payouts: 4200 }
+      ]
     };
 
     function seedDemo(){
@@ -1072,10 +1217,129 @@
       }[c]));
     }
 
+    function setupCanvas(canvas){
+      if (!canvas) return null;
+      const ratio = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width || canvas.width;
+      const height = rect.height || canvas.height;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(ratio, ratio);
+      return { ctx, width, height };
+    }
+
+    function drawLineChart(canvas, labels, series){
+      const setup = setupCanvas(canvas);
+      if (!setup) return;
+      const { ctx, width, height } = setup;
+      const padding = 28;
+      const chartW = width - padding * 2;
+      const chartH = height - padding * 2;
+      const values = series.flatMap(s => s.data);
+      const maxVal = Math.max(...values, 1);
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = "rgba(233,232,245,0.95)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i += 1){
+        const y = padding + (chartH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+      }
+
+      labels.forEach((label, idx) => {
+        const x = padding + (chartW / (labels.length - 1)) * idx;
+        ctx.fillStyle = "#6b6f7b";
+        ctx.font = "11px ui-sans-serif, system-ui";
+        ctx.textAlign = "center";
+        ctx.fillText(label, x, height - 10);
+      });
+
+      series.forEach((s, sIdx) => {
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = 2;
+        ctx.setLineDash(s.dash || []);
+        ctx.beginPath();
+        s.data.forEach((val, idx) => {
+          const x = padding + (chartW / (labels.length - 1)) * idx;
+          const y = padding + chartH - (val / maxVal) * chartH;
+          if (idx === 0){
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+          if (sIdx === 0){
+            ctx.fillStyle = s.color;
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+          }
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+      });
+    }
+
+    function drawBarChart(canvas, groups){
+      const setup = setupCanvas(canvas);
+      if (!setup) return;
+      const { ctx, width, height } = setup;
+      const padding = 30;
+      const chartW = width - padding * 2;
+      const chartH = height - padding * 2;
+      const maxVal = Math.max(...groups.flatMap(g => [g.contributions, g.payouts]), 1);
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = "rgba(233,232,245,0.95)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i += 1){
+        const y = padding + (chartH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+      }
+
+      const groupW = chartW / groups.length;
+      const barW = groupW * 0.28;
+      groups.forEach((g, idx) => {
+        const xBase = padding + idx * groupW + groupW / 2;
+        const contribH = (g.contributions / maxVal) * chartH;
+        const payoutH = (g.payouts / maxVal) * chartH;
+        ctx.fillStyle = "#1f64e6";
+        ctx.fillRect(xBase - barW - 4, padding + chartH - contribH, barW, contribH);
+        ctx.fillStyle = "#ffb020";
+        ctx.fillRect(xBase + 4, padding + chartH - payoutH, barW, payoutH);
+
+        ctx.fillStyle = "#6b6f7b";
+        ctx.font = "11px ui-sans-serif, system-ui";
+        ctx.textAlign = "center";
+        ctx.fillText(g.name.split(" ")[0], xBase, height - 10);
+      });
+    }
+
+    function renderCharts(){
+      const lineCanvas = document.getElementById("revenueTrendChart");
+      const barCanvas = document.getElementById("revenueGroupChart");
+      if (!lineCanvas || !barCanvas) return;
+      drawLineChart(lineCanvas, state.revenueSeries.labels, [
+        { data: state.revenueSeries.actual, color: "#1f64e6" },
+        { data: state.revenueSeries.projected, color: "#8db4ff", dash: [4, 4] }
+      ]);
+      drawBarChart(barCanvas, state.groupRevenue);
+    }
+
     function render(){
       ensureSelected();
       renderNowPill();
       renderMetrics();
+      renderCharts();
       renderGroups();
       renderSelectedGroupPanel();
       renderCalendar();
@@ -2037,3 +2301,48 @@
       document.getElementById("createGroupBtn").onclick = () => openCreateGroupModal();
 
       document.getElementById("resetDemoBtn").onclick = () => {
+        seedDemo();
+        render();
+        toast("Demo reset", "Dummy data restored.");
+      };
+
+      document.getElementById("searchInput").addEventListener("input", () => {
+        renderGroups();
+      });
+
+      document.getElementById("walletBtn").onclick = () => openWalletModal();
+      document.getElementById("auditBtn").onclick = () => openAuditModal();
+
+      document.getElementById("prevMonth").onclick = () => {
+        state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() - 1, 1);
+        state.selectedDate = null;
+        renderCalendar();
+        renderDatePanel();
+      };
+      document.getElementById("nextMonth").onclick = () => {
+        state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() + 1, 1);
+        state.selectedDate = null;
+        renderCalendar();
+        renderDatePanel();
+      };
+
+      document.getElementById("closeModal").onclick = () => closeModal();
+      document.getElementById("cancelModal").onclick = () => closeModal();
+      document.getElementById("confirmModal").onclick = () => {
+        if (state.lastModal && typeof state.lastModal.onConfirm === "function"){
+          state.lastModal.onConfirm();
+        }
+      };
+
+      window.addEventListener("resize", () => {
+        renderCharts();
+      });
+    }
+
+    seedDemo();
+    render();
+    wire();
+    setInterval(renderNowPill, 30000);
+  </script>
+</body>
+</html>
