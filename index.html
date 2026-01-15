@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NASASA Stokvel Management Dashboard</title>
+  <title>Nasasa Management Dashboard</title>
   <style>
     :root{
-      --bg1:#ffffff;
-      --bg2:#ffffff;
-      --card:#ffffffcc;
-      --stroke:#e9e8f5;
-      --text:#12131a;
-      --muted:#6b6f7b;
-      --shadow: 0 18px 55px rgba(18, 19, 26, 0.10);
-      --shadow2: 0 10px 30px rgba(18, 19, 26, 0.08);
-      --radius: 22px;
-      --radius2: 16px;
+      --bg1:#f5f7fb;
+      --bg2:#f5f7fb;
+      --card:#ffffff;
+      --stroke:#d7dfec;
+      --text:#0f1b2d;
+      --muted:#5c687c;
+      --shadow: 0 12px 28px rgba(15, 27, 45, 0.08);
+      --shadow2: 0 8px 20px rgba(15, 27, 45, 0.06);
+      --radius: 18px;
+      --radius2: 14px;
 
-      --purple:#2f6fe5;
+      --purple:#1f64e6;
       --purple2:#8db4ff;
       --mint:#25c7a6;
       --pink:#ff6aa0;
@@ -31,25 +31,25 @@
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
       background: var(--bg1);
     }
 
     .wrap{
-      max-width: 1180px;
+      max-width: 100%;
       margin: 0 auto;
-      padding: 22px 16px 60px;
+      padding: 28px 48px 72px;
     }
 
     .topbar{
       position: sticky;
       top: 0;
       z-index: 20;
-      padding: 10px 0 14px;
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,0.95);
-      border-bottom: 1px solid rgba(233,232,245,0.9);
+      padding: 12px 0 14px;
+      backdrop-filter: blur(16px);
+      background: rgba(245,247,251,0.95);
+      border-bottom: 1px solid var(--stroke);
     }
 
     .topbarInner{
@@ -57,9 +57,47 @@
       gap:12px;
       align-items:center;
       justify-content:space-between;
-      max-width: 1180px;
+      max-width: 100%;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 48px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 0;
+    }
+    .brandLogo{
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid rgba(31, 100, 230, 0.2);
+      box-shadow: 0 8px 16px rgba(31, 100, 230, 0.12);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+    .brandLogo img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .brandText{
+      display:flex;
+      flex-direction:column;
+      line-height: 1.05;
+    }
+    .brandName{
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .brandTag{
+      font-size: 12px;
+      color: var(--muted);
     }
 
     .brand{
@@ -105,11 +143,11 @@
       display:flex;
       align-items:center;
       gap:10px;
-      padding: 12px 14px;
+      padding: 12px 16px;
       border: 1px solid var(--stroke);
       border-radius: 999px;
-      background: rgba(255,255,255,0.65);
-      box-shadow: 0 8px 22px rgba(18,19,26,0.06);
+      background: #fff;
+      box-shadow: var(--shadow2);
       min-width: 180px;
     }
     .search input{
@@ -126,7 +164,7 @@
       border-radius: 999px;
       border: 1px solid var(--stroke);
       color: var(--muted);
-      background: rgba(255,255,255,0.55);
+      background: #f8faff;
       white-space: nowrap;
     }
 
@@ -141,29 +179,26 @@
       align-items:center;
       gap:10px;
       padding: 10px 14px;
-      border-radius: 999px;
+      border-radius: 10px;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.65);
-      box-shadow: 0 8px 22px rgba(18,19,26,0.06);
+      background: #fff;
+      box-shadow: var(--shadow2);
       cursor:pointer;
       user-select:none;
       transition: transform .12s ease, box-shadow .12s ease;
     }
-    .iconBtn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 12px 26px rgba(18,19,26,0.08);
-    }
+    .iconBtn:hover{ transform: translateY(-1px); }
 
     .titleRow{
       display:flex;
       align-items:flex-end;
       justify-content:space-between;
       gap:12px;
-      margin: 22px 0 10px;
+      margin: 20px 0 18px;
     }
     h1{
       margin:0;
-      font-size: 28px;
+      font-size: 30px;
       letter-spacing: -0.02em;
     }
     .subtitle{
@@ -173,15 +208,15 @@
     }
 
     .card{
-      border: 1px solid rgba(233,232,245,0.95);
+      border: 1px solid var(--stroke);
       background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
     }
 
     .section{
-      margin-top: 16px;
-      padding: 16px;
+      margin-top: 18px;
+      padding: 20px;
     }
 
     .sectionHeader{
@@ -208,39 +243,39 @@
     }
 
     .btn{
-      border: 0;
+      border: 1px solid #1f64e6;
       cursor:pointer;
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 14px 14px;
-      font-weight: 650;
+      font-weight: 700;
       font-size: 14px;
       background: var(--btn);
       color: var(--btnText);
-      box-shadow: 0 14px 30px rgba(18,19,26,0.14);
+      box-shadow: 0 10px 20px rgba(31, 100, 230, 0.18);
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 10px;
       transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
     }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 36px rgba(18,19,26,0.16); }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 12px 24px rgba(31, 100, 230, 0.2); }
     .btn:active{ transform: translateY(0px); opacity: 0.92; }
 
     .btnSecondary{
-      background: rgba(255,255,255,0.7);
+      background: #fff;
       color: var(--text);
       border: 1px solid var(--stroke);
-      box-shadow: 0 10px 22px rgba(18,19,26,0.07);
+      box-shadow: var(--shadow2);
       font-weight: 650;
     }
 
     .btnTiny{
       padding: 10px 12px;
-      border-radius: 14px;
+      border-radius: 10px;
       font-size: 13px;
       box-shadow: none;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.7);
+      background: #fff;
       color: var(--text);
     }
 
@@ -256,11 +291,67 @@
       gap: 10px;
     }
 
+    .chartsGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .chartCard{
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: #fff;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .chartHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .chartTitle{
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      margin:0;
+    }
+    .chartSub{
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .chartCanvas{
+      width: 100%;
+      height: 220px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--stroke);
+    }
+    .chartLegend{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .legendItem{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+    }
+    .legendSwatch{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--purple);
+    }
+
     .metric{
       padding: 14px;
-      border-radius: 18px;
+      border-radius: 16px;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.68);
+      background: #fff;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -274,14 +365,14 @@
       min-width: 0;
     }
     .dot{
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
       display:grid;
       place-items:center;
       color: #fff;
-      font-weight: 800;
-      box-shadow: 0 10px 20px rgba(18,19,26,0.10);
+      font-weight: 700;
+      box-shadow: none;
       flex: 0 0 auto;
     }
     .dot.purple{ background: linear-gradient(135deg, rgba(31,100,230,1), rgba(141,180,255,1)); }
@@ -313,7 +404,7 @@
       padding: 6px 10px;
       border-radius: 999px;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.65);
+      background: #f8faff;
       color: var(--muted);
       white-space: nowrap;
     }
@@ -331,10 +422,10 @@
     }
 
     .groupCard{
-      padding: 14px;
-      border-radius: 18px;
+      padding: 16px;
+      border-radius: 16px;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.68);
+      background: #fff;
       display:flex;
       flex-direction:column;
       gap: 10px;
@@ -363,9 +454,9 @@
     }
     .kv{
       border: 1px solid var(--stroke);
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 10px 12px;
-      background: rgba(255,255,255,0.65);
+      background: #f8faff;
     }
     .kv .k{
       color: var(--muted);
@@ -415,9 +506,9 @@
     }
     .day{
       min-height: 78px;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.62);
+      background: #fff;
       padding: 8px;
       cursor:pointer;
       transition: transform .12s ease, box-shadow .12s ease;
@@ -425,7 +516,7 @@
     }
     .day:hover{
       transform: translateY(-1px);
-      box-shadow: 0 12px 22px rgba(18,19,26,0.08);
+      box-shadow: var(--shadow2);
     }
     .day.muted{
       opacity: 0.45;
@@ -445,7 +536,7 @@
       padding: 4px 7px;
       border-radius: 999px;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.7);
+      background: #f8faff;
       color: var(--muted);
       white-space: nowrap;
     }
@@ -463,11 +554,11 @@
       letter-spacing:-0.01em;
     }
     .empty{
-      border: 1px dashed rgba(233,232,245,1);
-      border-radius: 16px;
+      border: 1px dashed var(--stroke);
+      border-radius: 14px;
       padding: 12px;
       color: var(--muted);
-      background: rgba(255,255,255,0.55);
+      background: #f8faff;
       font-size: 13px;
     }
 
@@ -475,9 +566,10 @@
       width:100%;
       border-collapse: collapse;
       overflow:hidden;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.65);
+      background: #fff;
+      box-shadow: var(--shadow2);
     }
     th, td{
       padding: 10px 10px;
@@ -490,7 +582,7 @@
       color: var(--muted);
       font-size: 12px;
       font-weight: 800;
-      background: rgba(255,255,255,0.55);
+      background: #f6f8fc;
     }
     tr:last-child td{ border-bottom: 0; }
 
@@ -500,7 +592,7 @@
       padding: 6px 10px;
       border-radius: 999px;
       border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.7);
+      background: #f8faff;
       display:inline-block;
       white-space: nowrap;
     }
@@ -677,6 +769,7 @@
     @media (min-width: 760px){
       .quickActions{ grid-template-columns: repeat(3, 1fr); }
       .metrics{ grid-template-columns: repeat(4, 1fr); }
+      .chartsGrid{ grid-template-columns: repeat(2, 1fr); }
       .grid2{ grid-template-columns: 2fr 1fr; }
       .split{ grid-template-columns: 1.5fr 1fr; }
       .groupsGrid{ grid-template-columns: repeat(2, 1fr); }
@@ -695,25 +788,22 @@
           <img src="https://www.nasasa.co.za/wp-content/uploads/2023/11/logo.png" alt="NASASA logo" />
         </a>
         <div class="brandText">
-          <div class="brandName">NASASA Stokvel</div>
-          <div class="brandTag">Member management hub</div>
+          <div class="brandName">Nasasa</div>
+          <div class="brandTag">Corporate member management</div>
         </div>
       </div>
 
       <div class="search" role="search">
-        <span aria-hidden="true">🔎</span>
         <input id="searchInput" placeholder="Search groups or members" />
-        <span class="pill">⌘ F</span>
+        <span class="pill">Search</span>
       </div>
 
       <div class="rightActions">
         <div class="iconBtn" id="walletBtn" title="Wallet">
-          <span aria-hidden="true">💳</span>
           <span style="font-weight:800;font-size:13px;">Wallet</span>
         </div>
         <div class="iconBtn" id="auditBtn" title="Audit log">
-          <span aria-hidden="true">🧾</span>
-          <span style="font-weight:800;font-size:13px;">Audit</span>
+          <span style="font-weight:800;font-size:13px;">Audit log</span>
         </div>
       </div>
     </div>
@@ -722,8 +812,8 @@
   <div class="wrap">
     <div class="titleRow">
       <div>
-        <h1>NASASA Stokvel Dashboard</h1>
-        <p class="subtitle">Blue-branded workspace for groups, members, contributions, payouts, and monthly income.</p>
+        <h1>Nasasa Dashboard</h1>
+        <p class="subtitle">Corporate overview for groups, members, contributions, payouts, and monthly income.</p>
       </div>
       <div class="pill" id="nowPill"></div>
     </div>
@@ -736,16 +826,13 @@
 
       <div class="quickActions">
         <button class="btn" id="openAddMember">
-          <span>Add Member</span>
-          <span aria-hidden="true">➕</span>
+          <span>Add member</span>
         </button>
         <button class="btn" id="openContribution">
-          <span>Record Contribution</span>
-          <span aria-hidden="true">🧾</span>
+          <span>Record contribution</span>
         </button>
         <button class="btn" id="openPayout">
-          <span>Make Payout</span>
-          <span aria-hidden="true">💸</span>
+          <span>Make payout</span>
         </button>
       </div>
     </section>
@@ -757,6 +844,39 @@
       </div>
 
       <div class="metrics" id="metrics"></div>
+    </section>
+
+    <section class="card section" aria-label="Revenue analytics">
+      <div class="sectionHeader">
+        <h2>Revenue analytics</h2>
+        <div class="hint">Demo charts with live UI rendering</div>
+      </div>
+
+      <div class="chartsGrid">
+        <div class="chartCard">
+          <div class="chartHeader">
+            <p class="chartTitle">Monthly revenue trend</p>
+            <span class="pill">Last 6 months</span>
+          </div>
+          <canvas class="chartCanvas" id="revenueTrendChart" width="640" height="240"></canvas>
+          <div class="chartLegend">
+            <span class="legendItem"><span class="legendSwatch" style="background:#1f64e6;"></span>Total revenue</span>
+            <span class="legendItem"><span class="legendSwatch" style="background:#8db4ff;"></span>Projected</span>
+          </div>
+        </div>
+
+        <div class="chartCard">
+          <div class="chartHeader">
+            <p class="chartTitle">Revenue by group</p>
+            <span class="pill">Current month</span>
+          </div>
+          <canvas class="chartCanvas" id="revenueGroupChart" width="640" height="240"></canvas>
+          <div class="chartLegend">
+            <span class="legendItem"><span class="legendSwatch" style="background:#1f64e6;"></span>Contributions</span>
+            <span class="legendItem"><span class="legendSwatch" style="background:#ffb020;"></span>Payouts</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="grid2" aria-label="Groups and side panel">
@@ -836,7 +956,7 @@
 
       <div class="btnRow" style="margin-top:12px;">
         <button class="btnSecondary btn" id="editBankBtn" style="flex: 0 0 auto;">
-          <span>Edit bank details</span><span aria-hidden="true">✏️</span>
+          <span>Edit bank details</span>
         </button>
       </div>
     </section>
@@ -858,10 +978,10 @@
 
       <div class="modalFoot" id="modalFoot">
         <button class="btnSecondary btn" id="cancelModal" style="box-shadow:none;">
-          <span>Cancel</span><span aria-hidden="true">↩</span>
+          <span>Cancel</span>
         </button>
         <button class="btn" id="confirmModal">
-          <span>Confirm</span><span aria-hidden="true">✅</span>
+          <span>Confirm</span>
         </button>
       </div>
     </div>
@@ -897,7 +1017,18 @@
       selectedGroupId: null,
       calMonth: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
       selectedDate: null,
-      lastModal: null
+      lastModal: null,
+      revenueSeries: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+        actual: [18500, 21200, 19800, 24350, 26500, 28700],
+        projected: [19000, 21800, 21000, 25500, 27500, 29800]
+      },
+      groupRevenue: [
+        { name: "Siyakhula Groceries", contributions: 8400, payouts: 3200 },
+        { name: "Mkansi Savings Circle", contributions: 11200, payouts: 5400 },
+        { name: "School Fees Pool", contributions: 6100, payouts: 2400 },
+        { name: "Masibuyele Burial", contributions: 9400, payouts: 4200 }
+      ]
     };
 
     function seedDemo(){
@@ -1116,10 +1247,129 @@
       }[c]));
     }
 
+    function setupCanvas(canvas){
+      if (!canvas) return null;
+      const ratio = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width || canvas.width;
+      const height = rect.height || canvas.height;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(ratio, ratio);
+      return { ctx, width, height };
+    }
+
+    function drawLineChart(canvas, labels, series){
+      const setup = setupCanvas(canvas);
+      if (!setup) return;
+      const { ctx, width, height } = setup;
+      const padding = 28;
+      const chartW = width - padding * 2;
+      const chartH = height - padding * 2;
+      const values = series.flatMap(s => s.data);
+      const maxVal = Math.max(...values, 1);
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = "rgba(233,232,245,0.95)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i += 1){
+        const y = padding + (chartH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+      }
+
+      labels.forEach((label, idx) => {
+        const x = padding + (chartW / (labels.length - 1)) * idx;
+        ctx.fillStyle = "#6b6f7b";
+        ctx.font = "11px ui-sans-serif, system-ui";
+        ctx.textAlign = "center";
+        ctx.fillText(label, x, height - 10);
+      });
+
+      series.forEach((s, sIdx) => {
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = 2;
+        ctx.setLineDash(s.dash || []);
+        ctx.beginPath();
+        s.data.forEach((val, idx) => {
+          const x = padding + (chartW / (labels.length - 1)) * idx;
+          const y = padding + chartH - (val / maxVal) * chartH;
+          if (idx === 0){
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+          if (sIdx === 0){
+            ctx.fillStyle = s.color;
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+          }
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+      });
+    }
+
+    function drawBarChart(canvas, groups){
+      const setup = setupCanvas(canvas);
+      if (!setup) return;
+      const { ctx, width, height } = setup;
+      const padding = 30;
+      const chartW = width - padding * 2;
+      const chartH = height - padding * 2;
+      const maxVal = Math.max(...groups.flatMap(g => [g.contributions, g.payouts]), 1);
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = "rgba(233,232,245,0.95)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i += 1){
+        const y = padding + (chartH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(width - padding, y);
+        ctx.stroke();
+      }
+
+      const groupW = chartW / groups.length;
+      const barW = groupW * 0.28;
+      groups.forEach((g, idx) => {
+        const xBase = padding + idx * groupW + groupW / 2;
+        const contribH = (g.contributions / maxVal) * chartH;
+        const payoutH = (g.payouts / maxVal) * chartH;
+        ctx.fillStyle = "#1f64e6";
+        ctx.fillRect(xBase - barW - 4, padding + chartH - contribH, barW, contribH);
+        ctx.fillStyle = "#ffb020";
+        ctx.fillRect(xBase + 4, padding + chartH - payoutH, barW, payoutH);
+
+        ctx.fillStyle = "#6b6f7b";
+        ctx.font = "11px ui-sans-serif, system-ui";
+        ctx.textAlign = "center";
+        ctx.fillText(g.name.split(" ")[0], xBase, height - 10);
+      });
+    }
+
+    function renderCharts(){
+      const lineCanvas = document.getElementById("revenueTrendChart");
+      const barCanvas = document.getElementById("revenueGroupChart");
+      if (!lineCanvas || !barCanvas) return;
+      drawLineChart(lineCanvas, state.revenueSeries.labels, [
+        { data: state.revenueSeries.actual, color: "#1f64e6" },
+        { data: state.revenueSeries.projected, color: "#8db4ff", dash: [4, 4] }
+      ]);
+      drawBarChart(barCanvas, state.groupRevenue);
+    }
+
     function render(){
       ensureSelected();
       renderNowPill();
       renderMetrics();
+      renderCharts();
       renderGroups();
       renderSelectedGroupPanel();
       renderCalendar();
@@ -1142,10 +1392,10 @@
       const net = totalNetBalance();
 
       const items = [
-        { label: "Total members", value: totalMembers.toLocaleString(), chip: "All groups", dot: "purple", icon: "👥" },
-        { label: "Monthly contributions", value: money(monthlyExpected), chip: "Expected", dot: "mint", icon: "📅" },
-        { label: "Payouts this month", value: money(payoutsThisMonth), chip: "This month", dot: "pink", icon: "💸" },
-        { label: "Net balance", value: money(net), chip: "Current", dot: "orange", icon: "🏦" }
+        { label: "Total members", value: totalMembers.toLocaleString(), chip: "All groups", dot: "purple", icon: "" },
+        { label: "Monthly contributions", value: money(monthlyExpected), chip: "Expected", dot: "mint", icon: "" },
+        { label: "Payouts this month", value: money(payoutsThisMonth), chip: "This month", dot: "pink", icon: "" },
+        { label: "Net balance", value: money(net), chip: "Current", dot: "orange", icon: "" }
       ];
 
       el.innerHTML = items.map(it => `
@@ -1188,7 +1438,7 @@
         const isSelected = g.id === state.selectedGroupId;
 
         return `
-          <div class="groupCard" style="${isSelected ? "outline: 2px solid rgba(122,92,255,0.35);" : ""}">
+          <div class="groupCard" style="${isSelected ? "outline: 2px solid rgba(31,100,230,0.3);" : ""}">
             <div class="groupTop">
               <div>
                 <p class="groupName">${escapeHtml(g.name)}</p>
@@ -2081,3 +2331,48 @@
       document.getElementById("createGroupBtn").onclick = () => openCreateGroupModal();
 
       document.getElementById("resetDemoBtn").onclick = () => {
+        seedDemo();
+        render();
+        toast("Demo reset", "Dummy data restored.");
+      };
+
+      document.getElementById("searchInput").addEventListener("input", () => {
+        renderGroups();
+      });
+
+      document.getElementById("walletBtn").onclick = () => openWalletModal();
+      document.getElementById("auditBtn").onclick = () => openAuditModal();
+
+      document.getElementById("prevMonth").onclick = () => {
+        state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() - 1, 1);
+        state.selectedDate = null;
+        renderCalendar();
+        renderDatePanel();
+      };
+      document.getElementById("nextMonth").onclick = () => {
+        state.calMonth = new Date(state.calMonth.getFullYear(), state.calMonth.getMonth() + 1, 1);
+        state.selectedDate = null;
+        renderCalendar();
+        renderDatePanel();
+      };
+
+      document.getElementById("closeModal").onclick = () => closeModal();
+      document.getElementById("cancelModal").onclick = () => closeModal();
+      document.getElementById("confirmModal").onclick = () => {
+        if (state.lastModal && typeof state.lastModal.onConfirm === "function"){
+          state.lastModal.onConfirm();
+        }
+      };
+
+      window.addEventListener("resize", () => {
+        renderCharts();
+      });
+    }
+
+    seedDemo();
+    render();
+    wire();
+    setInterval(renderNowPill, 30000);
+  </script>
+</body>
+</html>
